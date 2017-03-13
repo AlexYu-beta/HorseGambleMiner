@@ -3,7 +3,11 @@ package MatchGenerator;
 import TechSupport.DataHelper;
 import bean.Match;
 import bean.Sukaima;
+import com.google.gson.Gson;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,8 +20,33 @@ public class MatchGenerator {
         Match match=new Match(matchNum,sukaimas);
         DataHelper dataHelper=new DataHelper();
         String dataPath=dataHelper.getDataPath();
+        File directory=new File(dataPath+"/"+matchNum);
+        directory.mkdirs();
+        String fileName="";
+        File file=null;
+        for(int i=0;i<sukaimas.size();i++){
+            Sukaima sukaima=sukaimas.get(i);
+            fileName=dataPath+"/"+matchNum+"/"+(i+1)+".json";
+            file=new File(fileName);
+            try {
+                if(!file.exists()){
+                    file.createNewFile();
+                }
+                FileOutputStream fileOutputStream=new FileOutputStream(file,false);
+                Gson gson=new Gson();
+                String data=gson.toJson(sukaima);
+                fileOutputStream.write(data.getBytes("utf-8"));
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
 
     }
+
 
     public static void main(String args[]){
         Scanner scanner=new Scanner(System.in);
@@ -45,7 +74,7 @@ public class MatchGenerator {
             System.out.println("Please enter the data of six sukaimas:");
             for(int i=0;i<6;i++){
                 System.out.println("Please enter the name of sukaima No."+(i+1));
-                name=scanner.nextLine();
+                name=scanner.next();
                 System.out.print("skill:");
                 skill=scanner.nextInt();
                 System.out.println();
