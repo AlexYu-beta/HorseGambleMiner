@@ -8,8 +8,8 @@ import bean.Sukaima;
  */
 public class AreaOfHexagonData {
 
-    public double getAreaOfHexagonData(Sukaima sukaima){
-        double area=0.0;
+    public int getAreaOfHexagonData(Sukaima sukaima){
+        int area=0;
         area+=sukaima.getSkill()*sukaima.getSpeed();
         area+=sukaima.getSpeed()*sukaima.getToughness();
         area+=sukaima.getToughness()*sukaima.getFeed();
