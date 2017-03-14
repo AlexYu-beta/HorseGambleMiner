@@ -7,7 +7,7 @@ import java.io.IOException;
  * Created by alex on 3/13/17.
  * a method class to support data process
  */
-public class DataHelper {
+public class PathHelper {
     public String getDataPath(){
         File file=new File("");
         try {

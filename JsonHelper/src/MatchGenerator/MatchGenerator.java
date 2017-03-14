@@ -1,6 +1,6 @@
 package MatchGenerator;
 
-import TechSupport.DataHelper;
+import TechSupport.PathHelper;
 import bean.Match;
 import bean.Sukaima;
 import com.google.gson.Gson;
@@ -18,8 +18,38 @@ public class MatchGenerator {
 
     static void generateMatch_Proxy(int matchNum,ArrayList<Sukaima> sukaimas){
         Match match=new Match(matchNum,sukaimas);
-        DataHelper dataHelper=new DataHelper();
-        String dataPath=dataHelper.getDataPath();
+        PathHelper pathHelper =new PathHelper();
+        String dataPath= pathHelper.getDataPath();
+        File directory=new File(dataPath+"/"+matchNum);
+        directory.mkdirs();
+        String fileName="";
+        File file=null;
+        for(int i=0;i<sukaimas.size();i++){
+            Sukaima sukaima=sukaimas.get(i);
+            fileName=dataPath+"/"+matchNum+"/"+(i+1)+".json";
+            sukaima.setRank(i+1);
+            file=new File(fileName);
+            try {
+                if(!file.exists()){
+                    file.createNewFile();
+                }
+                FileOutputStream fileOutputStream=new FileOutputStream(file,false);
+                Gson gson=new Gson();
+                String data=gson.toJson(sukaima);
+                fileOutputStream.write(data.getBytes("utf-8"));
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    static void generateMatch_Predict(int matchNum,ArrayList<Sukaima> sukaimas){
+        Match match=new Match(matchNum,sukaimas);
+        PathHelper pathHelper =new PathHelper();
+        String dataPath= pathHelper.getDataPath();
         File directory=new File(dataPath+"/"+matchNum);
         directory.mkdirs();
         String fileName="";
@@ -42,9 +72,6 @@ public class MatchGenerator {
             }
 
         }
-
-
-
     }
 
 
