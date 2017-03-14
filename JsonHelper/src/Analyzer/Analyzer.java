@@ -41,4 +41,14 @@ public class Analyzer {
         }
         return result;
     }
+
+    public ArrayList<ArrayList<Sukaima>> getSukaimas(){
+        ArrayList<ArrayList<Sukaima>> result=new ArrayList<>();
+        for(int rank=1;rank<=6;rank++){
+            result.add(getSukaimasByRank(rank));
+        }
+        return result;
+    }
+
+
 }
